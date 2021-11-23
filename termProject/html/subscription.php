@@ -41,7 +41,7 @@
                         <li>4 Active Listening Sessions</li>
                         <li>Play music offline</li>
                     </ul>
-                    <a href="#" class="btn btn-primary">Get Plus</a>
+                    <a href="#" class="btn btn-primary"> Get Premium </a>
                 </div>
             </div>
     </main>
