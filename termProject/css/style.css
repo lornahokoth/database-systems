@@ -173,7 +173,7 @@ footer {
     height: 11em;
   }
 }
- /* Subscription site Style Sheet */
+ /* Subscription CSS */
 .sub-card {
   height: 100%;
  }
@@ -210,4 +210,12 @@ footer {
 
 .bottom-button {
   margin-top: 15px;
+}
+/* Header CSS */
+.header-logo {
+  width: 35px;
+  height: 35px;
+}
+.span-logo {
+  padding-left: 10px;
 }
