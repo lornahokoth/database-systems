@@ -118,6 +118,9 @@ footer {
 .carousel-row {
   height: 33%;
 }
+.login {
+  min-height: 100%;
+}
 
 .login-row {
   height: 100%;
@@ -190,4 +193,21 @@ footer {
   font-size: 14pt; 
   height: 60%;
   margin-left: 20%;
+}
+
+.hr-label {
+  display: flex;
+  flex-direction: row;
+}
+
+.hr-label:before,
+.hr-label:after {
+  content: "";
+  flex: 1 1;
+  border-bottom: 1px solid #000;
+  margin: auto;
+}
+
+.bottom-button {
+  margin-top: 15px;
 }

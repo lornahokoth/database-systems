@@ -11,7 +11,7 @@
     <main>
     <?php include("./sidebar.php"); ?>
       <div class="container-fluid">
-        <div class="row">
+        <div class="row carousel-row">
           <div
             id="playlistCarousel"
             class="carousel slide"
@@ -44,7 +44,7 @@
             </button>
           </div>
         </div>
-        <div class="row">
+        <div class="row carousel-row">
           <div id="podcastCarousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner"></div>
             <button
@@ -73,7 +73,7 @@
             </button>
           </div>
         </div>
-        <div class="row">
+        <div class="row carousel-row">
           <div
             id="recArtistCarousel"
             class="carousel slide"
