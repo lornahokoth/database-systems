@@ -8,7 +8,7 @@
               me-md-auto
               text-white text-decoration-none
             ">
-                <img class="header-logo" src="/img/wavelength.png" alt="Wavelength Logo">
+                <img class="header-logo" src="../img/wavelength.png" alt="Wavelength Logo">
                 <span class="fs-4 span-logo"> Wavelength </span>
             </a>
         </div>

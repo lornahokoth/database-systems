@@ -24,26 +24,24 @@
                                 <div class="col-lg-10 col-xl-7 mx-auto">
                                     <h3 class="display-4 text-center">Wavelength</h3>
                                     <p class="text-muted mb-4 text-center">To continue, log in to Wavelength.</p>
-                                    <form>
-                                        <div class="mb-3">
-                                            <input id="inputEmail" type="email" placeholder="Email address" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
-                                        </div>
-                                        <div class="mb-3">
-                                            <input id="inputPassword" type="password" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
-                                        </div>
-                                        <div class="custom-control custom-checkbox mb-3">
-                                            <input id="customCheck1" type="checkbox" checked class="custom-control-input">
-                                            <label for="customCheck1" class="custom-control-label">Remember password</label>
-                                        </div>
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" onclick="signin()">Sign in</button>
-                                        </div>
-                                    </form>
-
-                                    <label class="hr-label">OR</label>
-                                    <div class="text-center bottom-button">
-                                        <button type="button" class="btn btn-outline-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" onclick="goToSignUp()">Sign up for Wavelength</button>
+                                    <div class="mb-3">
+                                        <input id="inputUser" type="text" placeholder="Username" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
+                                    <div class="mb-3">
+                                        <input id="inputPassword" type="password" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                    </div>
+                                    <div class="custom-control custom-checkbox mb-3">
+                                        <input id="customCheck1" type="checkbox" checked class="custom-control-input">
+                                        <label for="customCheck1" class="custom-control-label">Remember password</label>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" onclick="signin()">Sign in</button>
+                                    </div>
+
+                                <label class="hr-label">OR</label>
+                                <div class="text-center bottom-button">
+                                    <button type="button" class="btn btn-outline-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" onclick="goToSignUp()">Sign up for Wavelength</button>
+                                </div>
                                 </div>
                             </div>
                         </div>
@@ -57,19 +55,22 @@
                                     <h3 class="display-4 text-center">Wavelength</h3>
                                     <p class="text-muted mb-4 text-center">To continue, log in to Wavelength.</p>
                                     <div class="mb-3">
-                                        <input id="inputFirstName" type="text" placeholder="First Name" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                        <input id="signupFirstName" type="text" placeholder="First Name" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
                                     <div class="mb-3">
-                                        <input id="inputLastName" type="text" placeholder="Last Name" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                        <input id="signupLastName" type="text" placeholder="Last Name" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
                                     <div class="mb-3">
-                                        <input id="inputEmail" type="email" placeholder="Email address" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                        <input id="signupEmail" type="email" placeholder="Email address" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
                                     <div class="mb-3">
-                                        <input id="inputPassword" type="password" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                        <input id="signupUser" type="email" placeholder="Username" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
                                     <div class="mb-3">
-                                        <input id="inputConfirmPassword" type="password" placeholder="Confirm Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                        <input id="signupPassword" type="password" placeholder="Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input id="signupConfirmPassword" type="password" placeholder="Confirm Password" required="" class="form-control rounded-pill border-0 shadow-sm px-4 text-primary">
                                     </div>
                                     <div class="text-center">
                                         <button type="button" class="btn btn-primary btn-block text-uppercase mb-2 rounded-pill shadow-sm" onclick="signup()">Sign Up</button>
