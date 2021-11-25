@@ -16,40 +16,55 @@ function signup() {
     fname = $('#signupFirstName').val();
     lname = $('#signupLastName').val();
     email = $('#signupEmail').val();
+    dob = $('#signupDOB').val();
     username = $('#signupUser').val();
     passwd = $('#signupPassword').val();
     confirmPasswd = $('#signupConfirmPassword').val();
     $.ajax({
         type: "POST",
-        url: "https://codd.cs.gsu.edu/~lokoth1/php/controller/LoginController.php?func=signup",
-        data:{"fname":fname, "lname":lname, "email":email, "username":username, "password":passwd, "confirmPasswd":confirmPasswd},
+        url: "https://codd.cs.gsu.edu/~lokoth1/php/controller/LoginController.php",
+        async: false,
         dataType: "json",
+        data:{
+            "func": "signup",
+            "fname":fname,
+            "lname":lname,
+            "dob": dob,
+            "email":email,
+            "username":username,
+            "password":passwd,
+            "confirmPassword":confirmPasswd},
         success: function(resultData) {
-            alert(resultData);
+            if(resultData.code == 200) {
+                window.location.href = "https://codd.cs.gsu.edu/~lokoth1/html/subscription.php";
+            } else {
+                alert(resultData.message);
+            }
         },
         error: function(err) {
-            alert(err);
+            alert("Error" + err);
         }
     });
 }
 
 function signin() {
-    email = $('#inputUser').val();
+    username = $('#inputUser').val();
     passwd = $('#inputPassword').val();
     $.ajax({
         type: "POST",
         url: "https://codd.cs.gsu.edu/~lokoth1/php/controller/LoginController.php",
         async: false,
+        dataType: "json",
         data:{
             "func": "login",
-            "email": email, 
+            "username": username, 
             "password":passwd
         },
-        dataType: "json",
         success: function(resultData) {
             if(resultData.code == 200) {
                 window.location.href = "https://codd.cs.gsu.edu/~lokoth1/html/landing.php";
-                return false;
+            } else {
+                alert(resultData.message);
             }
         },
         error: function(err) {

@@ -61,6 +61,9 @@
                                         <input id="signupLastName" type="text" placeholder="Last Name" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
                                     <div class="mb-3">
+                                        <input id="signupDOB" type="date" placeholder="Date of Birth" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
+                                    </div>
+                                    <div class="mb-3">
                                         <input id="signupEmail" type="email" placeholder="Email address" required="" autofocus="" class="form-control rounded-pill border-0 shadow-sm px-4">
                                     </div>
                                     <div class="mb-3">
