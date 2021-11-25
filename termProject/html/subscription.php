@@ -20,7 +20,7 @@
                         <li>Unlimited Listening</li>
                         <li>Ads every 30 min</li>
                     </ul>
-                    <a href="#" class="btn btn-primary">Start Listening</a>
+                    <a href="../html/landing.php" class="btn btn-primary">Start Listening</a>
                 </div>
                 <div class="col text-center card sub-card">
                     <h5 class="card-title sub-header"> Plus ($4.99) </h5>
@@ -30,7 +30,7 @@
                         <li>Ad Free Listening</li>
                         <li>2 Active Listening Sessions</li>
                     </ul>
-                    <a href="#" class="btn btn-primary">Get Plus</a>
+                    <a href="../html/payment.php?type=plus" class="btn btn-primary">Get Plus</a>
                 </div>
                 <div class="col text-center card sub-card">
                     <h5 class="card-title sub-header"> Premium ($9.99) </h5>
@@ -41,7 +41,7 @@
                         <li>4 Active Listening Sessions</li>
                         <li>Play music offline</li>
                     </ul>
-                    <a href="#" class="btn btn-primary"> Get Premium </a>
+                    <a href="../html/payment.php?type=premium" class="btn btn-primary"> Get Premium </a>
                 </div>
             </div>
     </main>

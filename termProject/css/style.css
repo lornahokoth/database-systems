@@ -22,6 +22,11 @@ footer {
   height: 10vh;
 }
 
+.content-right {
+  border-left: 2px solid grey;
+  margin-left: 10px;
+}
+
 .b-example-divider {
   flex-shrink: 0;
   width: 1.5rem;
@@ -228,3 +233,7 @@ footer {
   margin-right: 8px;
 }
 
+.user-padding {
+  padding-left: 10px;
+  padding-right: 20px;
+}

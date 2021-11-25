@@ -43,6 +43,8 @@ function login() {
         $history_sql = "INSERT INTO dwekesa1.login_history (login_status, login_timestamp, ip_address, user_id) VALUES (" .
                        "1, \"" . date("Y-m-d H:i:s") . "\", \"" . $_SERVER['REMOTE_ADDR'] . "\", " . $user_info['user_id'] . ")";
         $results = mysqli_query($conn, $history_sql);
+        clearCookies();
+        setcookie('user_id', $user_info['user_id'], 0, '/');
     } else {
         $return['code'] = 401;
         $return['message'] = "Invalid username/password provided.";
@@ -109,7 +111,6 @@ function signup() {
            "\", 1)";
     if(mysqli_query($conn, $user_sql) === TRUE) {
         $user_id = mysqli_insert_id($conn);
-        var_dump($user_id);
         $customer_sql = "INSERT INTO dwekesa1.Customer (fname, lname, email, dob, user_id) VALUES (\"" . 
         $fname . "\", \"" . $lname . "\", \"" . $email . "\", \"" . $dob . "\", " . $user_id . ")";
         if(mysqli_query($conn, $customer_sql) === TRUE) {
@@ -138,6 +139,8 @@ function signup() {
     if($insert) {
         $return['code'] = 200;
         $return['message'] = "New user created successfully";
+        clearCookies();
+        setcookie('username', $user_id, 0, '/');
     } else {
         $return['code'] = 401;
         $return['message'] = $message;
@@ -145,4 +148,11 @@ function signup() {
 
     closedb($conn);
     return;
+}
+
+//clears all cookies
+function clearCookies() {
+    foreach ($_COOKIE as $key => $value) {
+        setcookie($key, false, 0, "/");
+    }
 }

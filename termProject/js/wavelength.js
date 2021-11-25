@@ -72,3 +72,62 @@ function signin() {
         }
     });
 }
+
+function makePayment() {
+    var params = window.location.search.substr(1);
+    var type = params.split('=')[1];
+    card_name = $("#card_name").val();
+    card_number = $("#card_number").val();
+    exp_date = $("#exp_date").val();
+    cvv = $("#cvv").val();
+    street_addr = $("#street_addr").val();
+    city = $("#city").val();
+    state = $("#state").val();
+    zipcode = $("#zipcode").val();
+    $.ajax({
+        type: "POST",
+        url: "https://codd.cs.gsu.edu/~lokoth1/php/controller/PaymentController.php",
+        async: false,
+        dataType: "json",
+        data:{
+            "func": "makePayment",
+            "type": type,
+            "card_name": card_name,
+            "card_number": card_number,
+            "exp_date": exp_date,
+            "cvv": cvv,
+            "street_addr": street_addr,
+            "city": city,
+            "state": state,
+            "zipcode": zipcode
+        },
+        success: function(resultData) {
+            if(resultData.code == 200) {
+                window.location.href = "https://codd.cs.gsu.edu/~lokoth1/html/landing.php";
+            } else {
+                alert(resultData.message);
+            }
+        },
+        error: function(err) {
+            alert("Error: " + err);
+        }
+    });
+}
+
+function logout() {
+    $.ajax({
+        type: "POST",
+        url: "https://codd.cs.gsu.edu/~lokoth1/php/controller/UserController.php",
+        async: false,
+        dataType: "json",
+        data:{
+            "func": "logout"
+        },
+        success: function(resultData) {
+            window.location.href = "https://codd.cs.gsu.edu/~lokoth1/html/login.php";
+        },
+        error: function(err) {
+            alert("Error: " + err);
+        }
+    });
+}
