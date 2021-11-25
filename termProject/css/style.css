@@ -70,10 +70,10 @@ footer {
   transform-origin: 0.5em 50%;
 }
 
-.btn-toggle[aria-expanded="true"] {
+.btn-toggle[aria-expanded='true'] {
   color: rgba(0, 0, 0, 0.85);
 }
-.btn-toggle[aria-expanded="true"]::before {
+.btn-toggle[aria-expanded='true']::before {
   transform: rotate(90deg);
 }
 
@@ -115,9 +115,7 @@ footer {
   margin: 0px;
 }
 
-.carousel-row {
-  height: 33%;
-}
+/* Login CSS */
 .login {
   min-height: 100%;
 }
@@ -136,6 +134,10 @@ footer {
 
 .login-col {
   padding: 0px;
+}
+/* Landing Page CSS */
+.carousel-row {
+  height: 33%;
 }
 
 .carousel {
@@ -173,24 +175,24 @@ footer {
     height: 11em;
   }
 }
- /* Subscription CSS */
+/* Subscription CSS */
 .sub-card {
   height: 100%;
- }
- .sub-row {
-   height:100%;
-   padding-top: 10%;
-   padding-bottom: 10%;
- }
- .sub-header {
-   padding-top: 5%;
-   padding-bottom: 5%;
-   font-size: 24pt;
- }
+}
+.sub-row {
+  height: 100%;
+  padding-top: 10%;
+  padding-bottom: 10%;
+}
+.sub-header {
+  padding-top: 5%;
+  padding-bottom: 5%;
+  font-size: 24pt;
+}
 .sub-ul {
   list-style-type: none;
   padding: 0;
-  font-size: 14pt; 
+  font-size: 14pt;
   height: 60%;
   margin-left: 20%;
 }
@@ -202,7 +204,7 @@ footer {
 
 .hr-label:before,
 .hr-label:after {
-  content: "";
+  content: '';
   flex: 1 1;
   border-bottom: 1px solid #000;
   margin: auto;
@@ -219,3 +221,10 @@ footer {
 .span-logo {
   padding-left: 10px;
 }
+/* Sidebar CSS */
+.icon-color {
+  filter: invert(99%) sepia(6%) saturate(270%) hue-rotate(28deg)
+    brightness(118%) contrast(100%);
+  margin-right: 8px;
+}
+

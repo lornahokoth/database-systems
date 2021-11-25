@@ -3,36 +3,40 @@
 
     <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-            <a href="#" class="nav-link active" aria-current="page">
-                <svg class="bi me-2" width="16" height="16">
-                    <use xlink:href="#home"></use>
-                </svg>
+            <a id="browse" href="../html/landing.php" class="nav-link text-white" aria-current="page">
+                <img src="../img/house-door.svg" class="icon-color" alt="Browse">
                 Browse
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16">
-                    <!-- <use xlink:href="#home"></use> -->
-                </svg>
+            <a id="search" href="../html/search.php" class="nav-link text-white">
+                <img src="../img/search.svg" class="icon-color" alt="Search">
                 Search
             </a>
         </li>
         <li>
             <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16">
-                    <!-- <use xlink:href="#home"></use> -->
-                </svg>
+                <img src="../img/mic.svg" class="icon-color" alt="Podcast">
                 Podcast
             </a>
         </li>
         <li>
             <a href="#" class="nav-link text-white">
-                <svg class="bi me-2" width="16" height="16">
-                    <!-- <use xlink:href="#home"></use> -->
-                </svg>
+                <img src="../img/music-note-list.svg" class="icon-color" alt="Playlist">
                 Playlist
             </a>
         </li>
     </ul>
 </div>
+
+<script src="../js/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        last_seg = window.location.pathname.split('/').pop();
+        if (last_seg == 'landing.php') {
+            $('#browse').addClass('active');
+        } else if (last_seg == 'search.php') {
+            $('#search').addClass('active');
+        }
+    });
+</script>
