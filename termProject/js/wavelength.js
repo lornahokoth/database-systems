@@ -131,3 +131,58 @@ function logout() {
         }
     });
 }
+
+function populateLandingPage() {
+    $.ajax({
+        type: "POST",
+        url: "https://codd.cs.gsu.edu/~lokoth1/php/controller/DataController.php",
+        async: false,
+        dataType: "json",
+        data:{
+            "func": "getLandingPage"
+        },
+        success: function(resultData) {
+            $("#playlistCarousel").html(resultData.playlist);
+            $("#recSongsCarousel").html(resultData.recSongs);
+            $("#recArtistCarousel").html(resultData.recArtists);
+        },
+        error: function(err) {
+            alert("Error: " + err);
+        }
+    });
+}
+
+function populateAlbumPage() {
+    var params = window.location.search.substr(1);
+    var keyValue = params.split('=');
+    var key = keyValue[0];
+    var value = keyValue[1];
+
+    $.ajax({
+        type: "POST",
+        url: "https://codd.cs.gsu.edu/~lokoth1/php/controller/DataController.php",
+        async: false,
+        dataType: "json",
+        data:{
+            "func": "getAlbumInfo",
+            "key": key,
+            "id": value
+        },
+        success: function(resultData) {
+            if(resultData.code == 200) {
+                $("#album_section").html(resultData.album_html);
+                if(resultData.songsByArtist != null) {
+                    $("#songsByArtistCarousel").html(resultData.songsByArtist);
+                    $("#artist").html(resultData.artist);
+                } else {
+                    $("#other_songs_section").html("");
+                }
+            } else {
+                alert(resultData.message);
+            }
+        },
+        error: function(err) {
+            alert("Error: " + err);
+        }
+    });
+}
