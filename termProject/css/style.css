@@ -163,6 +163,7 @@ footer {
   border: none;
   border-radius: 2;
   width: 180px;
+  cursor: pointer;
 }
 
 .card-body {
