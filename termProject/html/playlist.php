@@ -14,12 +14,12 @@
         <?php include("./sidebar.php"); ?>
 
         <div class="flex-column" style="width: 90%">
-            <div id="album_section" style="height: 66%">
-
+            <div id="playlist_section" style="height: 66%">
+                
             </div>
             <div id="other_songs_section" style="height:25%">
                 <div class="row">
-                    <h2 id="artist"></h2>
+                    <h2>Songs by artists found on this playlist</h2>
                 </div>
                 <div class="row carousel-row">
                     <div id="songsByArtist" class="carousel slide" data-ride="carousel">
@@ -55,7 +55,7 @@
 
 <script>
     $(document).ready(function() {
-        populateAlbumPage();
+        populatePlaylistPage();
         $(".carousel").carousel({
             interval: false,
         });
