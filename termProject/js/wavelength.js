@@ -222,5 +222,20 @@ function populatePlaylistPage() {
 }
 
 function playSong(song_id) {
-    
+    $.ajax({
+        type: "POST",
+        url: "https://codd.cs.gsu.edu/~lokoth1/php/controller/DataController.php",
+        async: false,
+        dataType: "json",
+        data:{
+            "func": "playSong",
+            "song_id": song_id
+        },
+        success: function(resultData) {
+            
+        },
+        error: function(err) {
+            alert("Error: " + err);
+        }
+    });
 }

@@ -157,8 +157,8 @@ function buildAlbumHtml($songResults, $album_info)
     $runtime = 0;
     $count = 0;
 
-    $tablehtml = '<div class="row table-wrapper-scroll-y my-custom-scrollbar" style="height: 79%; width: 80%;">';
-    $tablehtml .= '<table>';
+    $tablehtml = '<div class="row table-wrapper-scroll-y my-custom-scrollbar d-flex justify-content-center align-items-center" style="height: 79%;">';
+    $tablehtml .= '<table style="width: 90%;">';
     $tablehtml .= '<thead>';
     $tablehtml .= '<th>#</th>';
     $tablehtml .= '<th>Title</th>';
@@ -262,21 +262,20 @@ function getPlaylistInfo()
     if ($playlistResults->num_rows == 0) {
         $return['code'] = 401;
         $return['message'] = "Could not find playlist";
+        closedb($conn);
         return;
     }
 
-    $song_sql = "SELECT song.name AS song_name, album.album_name AS album_name, artist.name AS artist_name, song.released as released, song.runtime as runtime FROM dwekesa1.P_Contains_S AS ps_join " .
+    $song_sql = "SELECT song.song_id AS song_id, song.name AS song_name, album.album_name AS album_name, artist.name AS artist_name, song.released as released, song.runtime as runtime FROM dwekesa1.P_Contains_S AS ps_join " .
         "JOIN dwekesa1.Song AS song ON song.song_id = ps_join.song_id " .
         "JOIN dwekesa1.Artist AS artist ON artist.artist_id = song.artist_id " .
         "JOIN dwekesa1.Album AS album ON album.album_id = song.album_id " .
         "WHERE ps_join.playlist_id = " . $id;
     $songResults = mysqli_query($conn, $song_sql);
-    // $return['code'] = 401;
-    // $return['message'] = $song_sql;
-    // return;
     if ($songResults->num_rows == 0) {
         $return['code'] = 401;
         $return['message'] = "Could not find playlist details";
+        closedb($conn);
         return;
     }
 
@@ -306,6 +305,7 @@ function getPlaylistInfo()
     $return['code'] = 200;
     $return['playlist_html'] = $playlist_html;
     $return['songs_by_artists_html'] = $songs_by_artists_html;
+    closedb($conn);
 
     return;
 }
@@ -315,8 +315,8 @@ function buildPlaylistHtml($songResults, $playlistData)
     $runtime = 0;
     $count = 0;
 
-    $tablehtml = '<div class="row table-wrapper-scroll-y my-custom-scrollbar" style="height: 79%; width: 80%;">';
-    $tablehtml .= '<table>';
+    $tablehtml = '<div class="row table-wrapper-scroll-y my-custom-scrollbar d-flex justify-content-center align-items-center" style="height: 79%;">';
+    $tablehtml .= '<table style="width: 90%;">';
     $tablehtml .= '<thead>';
     $tablehtml .= '<th>#</th>';
     $tablehtml .= '<th>Title</th>';
@@ -430,6 +430,36 @@ function buildArtistHtml($results)
 {
 }
 
-function buildReArtistsHtml($results)
+function buildAlbumCarouselHtml($results)
 {
+}
+
+function playSong() {
+    global $return;
+    $return = array();
+    if (empty($_POST['song_id'])) {
+        $return['code'] = 401;
+        $return['message'] = "Invalid Data";
+        return;
+    }
+
+    $song_id = $_POST['song_id'];
+    if (!empty($_COOKIE['user_id'])) {
+        $user_id = $_COOKIE['user_id'];
+    }
+
+    $conn = dbconnect();
+
+    $listen_sql = "INSERT INTO dwekesa1.U_Listens_S (user_id, song_id) VALUES (" . $user_id . ", " . $song_id . ")";
+    $results = mysqli_query($conn, $listen_sql);
+
+    if($conn->affected_rows == 0) {
+        $return['code'] = 401;
+        $return['message'] = "Failed to update listens table.";
+        return;
+    }
+
+    $return['code'] = 200;
+    $return['message'] = "Added to listen table";
+    return;    
 }
