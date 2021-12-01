@@ -144,14 +144,6 @@ function getAlbumInfo()
     return;
 }
 
-function getArtistInfo()
-{
-    global $return;
-    $return = array();
-    if (empty($_POST['username']) || empty($_POST['password'])) {
-    }
-}
-
 function buildAlbumHtml($songResults, $album_info)
 {
     $runtime = 0;
@@ -365,38 +357,38 @@ function buildPlaylistHtml($songResults, $playlistData)
     $tablehtml .= '</table>';
     $tablehtml .= '</div>';
 
-    $album_html = "";
-    $album_html .= '<div class="row" style="height: 20%">';
-    $album_html .= '<div class="col-2 d-flex">';
-    $album_html .= '<img src="../img/music-note-list.svg" alt="You\'re Welcome" style="height: 100%" />';
-    $album_html .= '</div>';
-    $album_html .= '<div class="col">';
-    $album_html .= '<div class="row">';
-    $album_html .= '<label>Playlist</label>';
-    $album_html .= '</div>';
-    $album_html .= '<div class="row header-song-title">';
-    $album_html .= '<h1>' . $playlistData['name'] . '</h1>';
-    $album_html .= '</div>';
-    $album_html .= '<div class="row">';
-    $album_html .= '<div class="col">';
-    $album_html .= $playlistData['username'];
-    $album_html .= '</div>';
-    $album_html .= '<div class="col">';
-    $album_html .= $playlistData['time_stamp'];
-    $album_html .= '</div>';
-    $album_html .= '<div class="col">';
+    $playlist_html = "";
+    $playlist_html .= '<div class="row" style="height: 20%">';
+    $playlist_html .= '<div class="col-2 d-flex">';
+    $playlist_html .= '<img src="../img/music-note-list.svg" alt="You\'re Welcome" style="height: 100%" />';
+    $playlist_html .= '</div>';
+    $playlist_html .= '<div class="col">';
+    $playlist_html .= '<div class="row">';
+    $playlist_html .= '<label>Playlist</label>';
+    $playlist_html .= '</div>';
+    $playlist_html .= '<div class="row header-song-title">';
+    $playlist_html .= '<h1>' . $playlistData['name'] . '</h1>';
+    $playlist_html .= '</div>';
+    $playlist_html .= '<div class="row">';
+    $playlist_html .= '<div class="col">';
+    $playlist_html .= $playlistData['username'];
+    $playlist_html .= '</div>';
+    $playlist_html .= '<div class="col">';
+    $playlist_html .= $playlistData['time_stamp'];
+    $playlist_html .= '</div>';
+    $playlist_html .= '<div class="col">';
     $minutes = floor($runtime);
     $seconds = sprintf('%02d', ceil(($runtime - $minutes) * 60));
-    $album_html .= $songResults->num_rows . " Songs, " . $minutes . ":" . $seconds;
-    $album_html .= '</div>';
-    $album_html .= '<div class="col-8">';
-    $album_html .= '</div>';
-    $album_html .= '</div>';
-    $album_html .= '</div>';
-    $album_html .= '</div>';
-    $album_html .= $tablehtml;
+    $playlist_html .= $songResults->num_rows . " Songs, " . $minutes . ":" . $seconds;
+    $playlist_html .= '</div>';
+    $playlist_html .= '<div class="col-8">';
+    $playlist_html .= '</div>';
+    $playlist_html .= '</div>';
+    $playlist_html .= '</div>';
+    $playlist_html .= '</div>';
+    $playlist_html .= $tablehtml;
 
-    return $album_html;
+    return $playlist_html;
 }
 
 function buildSongsByArtistsHtml($results)
@@ -426,12 +418,208 @@ function buildSongsByArtistsHtml($results)
     return $carousel;
 }
 
-function buildArtistHtml($results)
+function getArtistInfo()
 {
+    global $return;
+    $return = array();
+    if (empty($_POST['artist_id'])) {
+        $return['code'] = 401;
+        $return['message'] = "Invalid Data";
+        return;
+    }
+
+    $artist_id = $_POST['artist_id'];
+    $conn = dbconnect();
+
+    $artist_sql = "SELECT * FROM dwekesa1.Artist WHERE artist_id = " . $artist_id;
+    $artistResult = mysqli_query($conn, $artist_sql);
+    if ($artistResult->num_rows == 0) {
+        $return['code'] = 401;
+        $return['message'] = "Could not find artist";
+        closedb($conn);
+        return;
+    }
+
+    $popular_songs_sql = "SELECT 
+                              song.song_id AS song_id,
+                              IF(listens_tbl.listens > 0, listens_tbl.listens, 0) AS listens,
+                              song.name AS song_name,
+                              artist.artist_id AS artist_id,
+                              artist.name AS artist_name,
+                              song.runtime AS runtime,
+                              album.album_name AS album_name
+                          FROM
+                              dwekesa1.Artist AS artist
+                                  JOIN
+                              dwekesa1.Song AS song ON song.artist_id = artist.artist_id
+                                  JOIN
+                              dwekesa1.Album AS album ON album.album_id = song.album_id
+                                  LEFT JOIN
+                              (SELECT 
+                                  song.song_id, COUNT(*) as listens
+                              FROM
+                                  dwekesa1.U_Listens_S AS US
+                              JOIN dwekesa1.Song AS song ON US.song_id = song.song_id
+                              JOIN dwekesa1.Artist AS artist ON song.artist_id = artist.artist_id
+                              GROUP BY US.song_id) AS listens_tbl ON listens_tbl.song_id = song.song_id
+                          WHERE artist.artist_id = " . $artist_id . " " .
+                         "GROUP BY song_id
+                          ORDER BY listens DESC, song_id ASC
+                          LIMIT 8";
+
+    $total_listens_sql = "SELECT 
+                              SUM(listens_tbl.listens) as total_listens
+                          FROM
+                              dwekesa1.Artist AS artist
+                                  JOIN
+                              dwekesa1.Song AS song ON song.artist_id = artist.artist_id
+                                  LEFT JOIN
+                              (SELECT 
+                                  song.song_id, COUNT(*) AS listens
+                              FROM
+                                  dwekesa1.U_Listens_S AS US
+                              JOIN dwekesa1.Song AS song ON US.song_id = song.song_id
+                              JOIN dwekesa1.Artist AS artist ON song.artist_id = artist.artist_id
+                              GROUP BY US.song_id) AS listens_tbl ON listens_tbl.song_id = song.song_id
+                          WHERE
+                              artist.artist_id = " . $artist_id;
+
+    $songResults = mysqli_query($conn, $popular_songs_sql);
+    $listensResults = mysqli_query($conn, $total_listens_sql);
+    $totalListens = $listensResults->fetch_assoc();
+    $artistData = $artistResult->fetch_assoc();
+    $artist_html = buildArtistHtml($songResults, $artistData, $totalListens['total_listens']);
+
+    $album_sql = "SELECT * FROM dwekesa1.Album WHERE artist_id = " . $artist_id;
+    $albumResults = mysqli_query($conn, $album_sql);
+    $album_html = "";
+    if($albumResults->num_rows > 0) {
+        $album_html = buildAlbumCarouselHtml($albumResults);
+    }
+
+    $return['code'] = 200;
+    $return['artist_html'] = $artist_html;
+    $return['album_html'] = $album_html;
+    $return['albums'] = "Albums by " . $artistData['name'];
+
+    return;
+}
+
+
+function buildArtistHtml($songResults, $artistData, $totalListens)
+{
+    $runtime = 0;
+    $count = 0;
+
+    $tablehtml = '<div class="row table-wrapper-scroll-y my-custom-scrollbar d-flex justify-content-center" style="height: 79%;">';
+    $tablehtml .= '<table style="width: 90%;">';
+    $tablehtml .= '<thead>';
+    $tablehtml .= '<th>#</th>';
+    $tablehtml .= '<th>Title</th>';
+    $tablehtml .= '<th style="width: 25px;">Playtime</th>';
+    $tablehtml .= '<th style="width: 25px;"></th>';
+    $tablehtml .= '</thead>';
+    $tablehtml .= '<tbody>';
+    while ($row = $songResults->fetch_assoc()) {
+        $count++;
+        if ($row != NULL) {
+            $runtime += $row['runtime'];
+            $tablehtml .= '<tr>';
+            $tablehtml .= '<td>' . $count . '</td>';
+            $tablehtml .= '<td>';
+            $tablehtml .= '<div class="row song-title">';
+            $tablehtml .= $row['song_name'];
+            $tablehtml .= '</div>';
+            $tablehtml .= '<div class="row album-name">';
+            $tablehtml .= $row['artist_name'] . ' - ' . $row['album_name'];
+            $tablehtml .= '</div>';
+            $tablehtml .= '</td>';
+            $minutes = floor($row['runtime']);
+            $seconds = sprintf('%02d', ceil(($row['runtime'] - $minutes) * 60));
+            $tablehtml .= '<td>' . $minutes . ":" . $seconds . '</td>';
+            $tablehtml .= '<td style="cursor:pointer;" onclick="playSong(' . $row['song_id'] . ')"><i class="fas fa-play"></i></td>';
+            $tablehtml .= '</tr>';
+        }
+    }
+
+    while ($count < 9) {
+        $tablehtml .= '<tr>';
+        $tablehtml .= '<td></td>';
+        $tablehtml .= '<td>';
+        $tablehtml .= '<div class="row song-title">';
+        $tablehtml .= '&nbsp;';
+        $tablehtml .= '</div>';
+        $tablehtml .= '<div class="row album-name">';
+        $tablehtml .= '&nbsp;';
+        $tablehtml .= '</div>';
+        $tablehtml .= '</td>';
+        $tablehtml .= '<td></td>';
+        $tablehtml .= '<td></td>';
+        $tablehtml .= '</tr>';
+        $count++;
+    }
+    $tablehtml .= '</table>';
+    $tablehtml .= '</div>';
+
+    $artist_html = "";
+    $artist_html .= '<div class="row" style="height: 20%">';
+    $artist_html .= '<div class="col-2 d-flex">';
+    $artist_html .= '<img src="../img/music-note-list.svg" alt="You\'re Welcome" style="height: 100%" />';
+    $artist_html .= '</div>';
+    $artist_html .= '<div class="col">';
+    $artist_html .= '<div class="row">';
+    $artist_html .= '<label>Artist</label>';
+    $artist_html .= '</div>';
+    $artist_html .= '<div class="row header-song-title">';
+    $artist_html .= '<h1>' . $artistData['name'] . '</h1>';
+    $artist_html .= '</div>';
+    $artist_html .= '<div class="row">';
+    $artist_html .= '<div class="col">';
+    $artist_html .= $artistData['bio'];
+    $artist_html .= '</div>';
+    $artist_html .= '<div class="col-8">';
+    $artist_html .= '</div>';
+    $artist_html .= '</div>';
+    $artist_html .= '<div class="row">';
+    $artist_html .= '<div class="col">';
+    $artist_html .= 'Total Listens: ' . $totalListens;
+    $artist_html .= '</div>';
+    $artist_html .= '</div>';
+    $artist_html .= '</div>';
+    $artist_html .= '</div>';
+    $artist_html .= '<div class="row">';
+    $artist_html .= '<h4>Top Songs By ' . $artistData['name'] . '</h4>';
+    $artist_html .= '</div>';
+    $artist_html .= $tablehtml;
+
+    return $artist_html;
 }
 
 function buildAlbumCarouselHtml($results)
 {
+    $count = 1;
+    $carousel = '<div class="carousel-item active">';
+    $carousel .= '<div class="cards-wrapper">';
+    while ($row = $results->fetch_assoc()) {
+        if ($count % 6 == 0) {
+            $carousel .= '</div>';
+            $carousel .= '</div>';
+            $carousel .= '<div class="carousel-item">';
+            $carousel .= '<div class="cards-wrapper">';
+        }
+        $carousel .= '<div class="card" onclick="location.href=\'../html/album.php?album_id=' . $row['album_id'] . '\'">';
+        $carousel .= '<img src="../img/music-note-list.svg" class="card-img-top" alt="' .
+            $row['album_name'] . '">';
+        $carousel .= '<div class="card-body">';
+        $carousel .= '<h5 class="card-title">' . $row['album_name'] . '</h5>';
+        $carousel .= '</div>';
+        $carousel .= '</div>';
+        $count++;
+    }
+    $carousel .= "</div>";
+    $carousel .= "</div>";
+
+    return $carousel;
 }
 
 function playSong() {

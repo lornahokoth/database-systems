@@ -221,6 +221,39 @@ function populatePlaylistPage() {
     });
 }
 
+function populateArtistPage() {
+    var params = window.location.search.substr(1);
+    var keyValue = params.split('=');
+    var artist_id = keyValue[1];
+    
+    $.ajax({
+        type: "POST",
+        url: "https://codd.cs.gsu.edu/~lokoth1/php/controller/DataController.php",
+        async: false,
+        dataType: "json",
+        data:{
+            "func": "getArtistInfo",
+            "artist_id": artist_id
+        },
+        success: function(resultData) {
+            if(resultData.code == 200) {
+                $("#artist_section").html(resultData.artist_html);
+                if(resultData.album_html != null) {
+                    $("#albumsByArtistCarousel").html(resultData.album_html);
+                    $("#albums").html(resultData.albums);
+                } else {
+                    $("#other_songs_section").html("");
+                }
+            } else {
+                alert(resultData.message);
+            }
+        },
+        error: function(err) {
+            alert("Error: " + err);
+        }
+    });
+}
+
 function playSong(song_id) {
     $.ajax({
         type: "POST",
