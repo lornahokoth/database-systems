@@ -12,7 +12,7 @@
     <?php include("./header.php"); ?>
     <main>
         <?php include("./sidebar.php"); ?>
-        <div class="container-fluid">
+        <div class="container-fluid scroll-div">
             <div class="row">
                 <h2>Playlists</h2>
             </div>

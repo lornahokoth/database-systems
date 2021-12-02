@@ -53,12 +53,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mt-4 mb-4 d-flex justify-content-between"> <span>Previous step</span> <button id="pay" class="btn btn-success px-3" onclick="makePayment()"></button> </div>
+                    <div class="mt-4 mb-4 d-flex justify-content-between"> <a href="../html/subscription.php"><span>Previous step</span></a> <button id="pay" class="btn btn-success px-3" onclick="makePayment()"></button> </div>
                 </div>
                 <div class="col-md-4">
                     <div class="card card-blue p-3 text-white mb-3"> <span>You have to pay</span>
-                        <div class="d-flex flex-row align-items-end mb-3">
-                            <h1 id="dollar" class="mb-0 yellow"</h1> <span id="cents"></span>
+                        <div class="d-flex flex-row align-items-start mb-3">
+                            <h1 id="dollar" class="mb-0 yellow"></h1> <span style="margin-top: 4px; font-size: 20px;" id="cents"></span>
                         </div> <span>Enjoy all the features and perk after you complete the payment</span> <a href="../html/subscription.php" target="_blank" class="yellow decoration">Know all the features</a>
                         <div class="hightlight"> <span id="next_payment"></span> </div>
                     </div>

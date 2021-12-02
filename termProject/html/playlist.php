@@ -13,7 +13,7 @@
     <main>
         <?php include("./sidebar.php"); ?>
 
-        <div class="flex-column" style="width: 90%">
+        <div class="flex-column scroll-div" style="width: 90%">
             <div id="playlist_section" style="height: 66%">
                 
             </div>

@@ -169,7 +169,7 @@ function buildAlbumHtml($songResults, $album_info)
             $tablehtml .= $row['name'];
             $tablehtml .= '</div>';
             $tablehtml .= '<div class="row album-name">';
-            $tablehtml .= $album_info['name'];
+            $tablehtml .= '<span style="padding-left: 0px;"><a href="../html/artist.php?artist_id=' . $album_info['artist_id'] . '">' . $album_info['name'] . '</a></span>';
             $tablehtml .= '</div>';
             $tablehtml .= '</td>';
             $minutes = floor($row['runtime']);
@@ -213,7 +213,7 @@ function buildAlbumHtml($songResults, $album_info)
     $album_html .= '</div>';
     $album_html .= '<div class="row">';
     $album_html .= '<div class="col">';
-    $album_html .= $album_info['name'];
+    $album_html .= '<span><a href="../html/artist.php?artist_id=' . $album_info['artist_id'] . '">' . $album_info['name'] . '</a></span>';
     $album_html .= '</div>';
     $album_html .= '<div class="col">';
     $album_html .= $album_info['released'];
@@ -258,7 +258,7 @@ function getPlaylistInfo()
         return;
     }
 
-    $song_sql = "SELECT song.song_id AS song_id, song.name AS song_name, album.album_name AS album_name, artist.name AS artist_name, song.released as released, song.runtime as runtime FROM dwekesa1.P_Contains_S AS ps_join " .
+    $song_sql = "SELECT song.song_id AS song_id, song.name AS song_name, album.album_id AS album_id, album.album_name AS album_name, artist.artist_id AS artist_id, artist.name AS artist_name, song.released as released, song.runtime as runtime FROM dwekesa1.P_Contains_S AS ps_join " .
         "JOIN dwekesa1.Song AS song ON song.song_id = ps_join.song_id " .
         "JOIN dwekesa1.Artist AS artist ON artist.artist_id = song.artist_id " .
         "JOIN dwekesa1.Album AS album ON album.album_id = song.album_id " .
@@ -327,7 +327,8 @@ function buildPlaylistHtml($songResults, $playlistData)
             $tablehtml .= $row['song_name'];
             $tablehtml .= '</div>';
             $tablehtml .= '<div class="row album-name">';
-            $tablehtml .= $row['artist_name'] . ' - ' . $row['album_name'];
+            $tablehtml .= '<span><a href="../html/artist.php?artist_id=' . $row['artist_id'] . '">' . $row['artist_name'] . 
+                          '</a> - <span><a href="../html/album.php?album_id=' . $row['album_id'] . '">' . $row['album_name'] . '</a></span>';
             $tablehtml .= '</div>';
             $tablehtml .= '</td>';
             $minutes = floor($row['runtime']);
@@ -582,6 +583,9 @@ function buildArtistHtml($songResults, $artistData, $totalListens)
     $artist_html .= '</div>';
     $artist_html .= '<div class="row">';
     $artist_html .= '<div class="col">';
+    if(empty($totalListens)) {
+        $totalListens = 0;
+    }
     $artist_html .= 'Total Listens: ' . $totalListens;
     $artist_html .= '</div>';
     $artist_html .= '</div>';

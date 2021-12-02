@@ -22,6 +22,10 @@ footer {
   height: 10vh;
 }
 
+.scroll-div {
+  overflow-y: auto;
+}
+
 .content-right {
   border-left: 2px solid grey;
   margin-left: 10px;

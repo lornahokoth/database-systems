@@ -7,7 +7,8 @@ body {
 }
 
 .card {
-    border: none
+    border: none;
+    width: auto;
 }
 
 .form-control {
