@@ -299,3 +299,29 @@ function playSong(song_id) {
         }
     });
 }
+
+function requestArtist() {
+    artist_name = $("#artistInput").val();
+    genre = $("#genreInput").val();
+    desc = $("#descInput").val();
+    $.ajax({
+        type: "POST",
+        url: "https://codd.cs.gsu.edu/~lokoth1/php/controller/DataController.php",
+        async: false,
+        dataType: "json",
+        data:{
+            "func": "requestArtist",
+            "artist_name": artist_name,
+            "genre": genre,
+            "desc": desc
+        },
+        success: function(resultData) {
+            if(resultData.code == 200) {
+                alert(resultData.message)
+            }
+        },
+        error: function(err) {
+            alert("Error: " + err);
+        }
+    });
+}

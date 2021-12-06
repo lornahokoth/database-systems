@@ -31,13 +31,14 @@
                     <label for="descInput">Reason/Description</label>
                     <textarea class="form-control" id="descInput" rows="3"></textarea>
                 </div>
-                <button type="button" class="btn btn-primary" onclick="">Submit</button>
+                <button type="button" class="btn btn-primary" onclick="requestArtist()">Submit</button>
             </Form>
         </div>
     </main>
     <?php include("./footer.php"); ?>
     <script src="../js/jquery-3.6.0.min.js"></script>
     <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/wavelength.js"></script>
 </body>
 
 </html>

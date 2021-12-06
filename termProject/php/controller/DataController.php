@@ -328,8 +328,8 @@ function buildPlaylistHtml($songResults, $playlistData)
             $tablehtml .= $row['song_name'];
             $tablehtml .= '</div>';
             $tablehtml .= '<div class="row album-name">';
-            $tablehtml .= '<span><a href="../html/artist.php?artist_id=' . $row['artist_id'] . '">' . $row['artist_name'] . 
-                          '</a> - <span><a href="../html/album.php?album_id=' . $row['album_id'] . '">' . $row['album_name'] . '</a></span>';
+            $tablehtml .= '<span><a href="../html/artist.php?artist_id=' . $row['artist_id'] . '">' . $row['artist_name'] .
+                '</a> - <span><a href="../html/album.php?album_id=' . $row['album_id'] . '">' . $row['album_name'] . '</a></span>';
             $tablehtml .= '</div>';
             $tablehtml .= '</td>';
             $minutes = floor($row['runtime']);
@@ -466,7 +466,7 @@ function getArtistInfo()
                               JOIN dwekesa1.Artist AS artist ON song.artist_id = artist.artist_id
                               GROUP BY US.song_id) AS listens_tbl ON listens_tbl.song_id = song.song_id
                           WHERE artist.artist_id = " . $artist_id . " " .
-                         "GROUP BY song_id
+        "GROUP BY song_id
                           ORDER BY listens DESC, song_id ASC
                           LIMIT 8";
 
@@ -496,7 +496,7 @@ function getArtistInfo()
     $album_sql = "SELECT * FROM dwekesa1.Album WHERE artist_id = " . $artist_id;
     $albumResults = mysqli_query($conn, $album_sql);
     $album_html = "";
-    if($albumResults->num_rows > 0) {
+    if ($albumResults->num_rows > 0) {
         $album_html = buildAlbumCarouselHtml($albumResults);
     }
 
@@ -586,7 +586,7 @@ function buildArtistHtml($songResults, $artistData, $totalListens)
     $artist_html .= '</div>';
     $artist_html .= '<div class="row">';
     $artist_html .= '<div class="col">';
-    if(empty($totalListens)) {
+    if (empty($totalListens)) {
         $totalListens = 0;
     }
     $artist_html .= 'Total Listens: ' . $totalListens;
@@ -629,7 +629,8 @@ function buildAlbumCarouselHtml($results)
     return $carousel;
 }
 
-function playSong() {
+function playSong()
+{
     global $return;
     $return = array();
     if (empty($_POST['song_id'])) {
@@ -648,7 +649,7 @@ function playSong() {
     $listen_sql = "INSERT INTO dwekesa1.U_Listens_S (user_id, song_id) VALUES (" . $user_id . ", " . $song_id . ")";
     $results = mysqli_query($conn, $listen_sql);
 
-    if($conn->affected_rows == 0) {
+    if ($conn->affected_rows == 0) {
         $return['code'] = 401;
         $return['message'] = "Failed to update listens table.";
         return;
@@ -661,5 +662,37 @@ function playSong() {
     $return['code'] = 200;
     $return['message'] = "Added to listen table";
     $return['song_name'] = $songData['name'];
-    return;    
+    return;
+}
+
+function requestArtist()
+{
+    global $return;
+    $return = array();
+    if (empty($_POST['artist_name']) || empty($_POST['genre']) || empty($_POST['desc'])) {
+        $return['code'] = 401;
+        $return['message'] = "Invalid Data";
+        return;
+    }
+
+    $artist_name = $_POST['artist_name'];
+    $genre = $_POST['genre'];
+    $desc = $_POST['desc'];
+    $date = date("Y-m-d H:i:s");
+
+    $conn = dbconnect();
+
+    $request_sql = "INSERT INTO dwekesa1.Request (name_of_artist, date_of_request, genre, text_box) VALUES ('" . 
+                   $artist_name . "', '" . $date . "', '" . $genre . "', '" . $desc . "')";
+    $results = mysqli_query($conn, $request_sql);
+
+    if ($conn->affected_rows == 0) {
+        $return['code'] = 401;
+        $return['message'] = "Failed to submit request.";
+        return;
+    }
+
+    $return['code'] = 200;
+    $return['message'] = "Request submitted succesfully.";
+    return;
 }
