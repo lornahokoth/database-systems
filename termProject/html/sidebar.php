@@ -14,6 +14,11 @@
                 Search
             </a>
         </li>
+        <li>
+            <a id="request" href="../html/request.php" class="nav-link text-white">
+                <img src="../img/card-text.svg" class="icon-color" alt="request">
+                Requests </a>
+        </li>
         <!-- <li>
             <a href="#" class="nav-link text-white">
                 <img src="../img/mic.svg" class="icon-color" alt="Podcast">
@@ -37,6 +42,8 @@
             $('#browse').addClass('active');
         } else if (last_seg == 'search.php') {
             $('#search').addClass('active');
+        } else if (last_seg == 'request.php') {
+            $('#request').addClass('active');
         }
     });
 </script>
