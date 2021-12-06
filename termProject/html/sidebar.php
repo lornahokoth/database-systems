@@ -14,7 +14,7 @@
                 Search
             </a>
         </li>
-        <li>
+        <!-- <li>
             <a href="#" class="nav-link text-white">
                 <img src="../img/mic.svg" class="icon-color" alt="Podcast">
                 Podcast
@@ -25,7 +25,7 @@
                 <img src="../img/music-note-list.svg" class="icon-color" alt="Playlist">
                 Playlist
             </a>
-        </li>
+        </li> -->
     </ul>
 </div>
 

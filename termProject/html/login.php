@@ -14,7 +14,7 @@
         <div class="container-fluid login-container">
             <div class="row login-row">
                 <div class="col-md-6 login-col login-img">
-                    <img src="../img/listening.jpg" alt="Group Listening to music" />
+                    <!-- <img src="../img/listening.jpg" alt="Group Listening to music" /> -->
                 </div>
 
                 <div id="signin" name="signin" class="col-md-6 login-col">

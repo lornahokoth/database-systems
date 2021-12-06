@@ -254,6 +254,31 @@ function populateArtistPage() {
     });
 }
 
+function search() {
+    search_string = $("#search_input").val();
+    $.ajax({
+        type: "POST",
+        url: "https://codd.cs.gsu.edu/~lokoth1/php/controller/SearchController.php",
+        async: false,
+        dataType: "json",
+        data:{
+            "func": "search",
+            "search_string": search_string
+        },
+        success: function(resultData) {
+            if(resultData.code == 200) {
+                $("#song_html").html(resultData.song_html);
+                $("#artist_html").html(resultData.artist_html);
+                $("#album_html").html(resultData.album_html);
+                $("#playlist_html").html(resultData.playlist_html);
+            }
+        },
+        error: function(err) {
+            alert("Error: " + err);
+        }
+    });
+}
+
 function playSong(song_id) {
     $.ajax({
         type: "POST",
@@ -265,7 +290,9 @@ function playSong(song_id) {
             "song_id": song_id
         },
         success: function(resultData) {
-            
+            loadMusic("../img/Jingle Bells 3.mp3");
+            $("#playbtn").trigger("click");
+            $("#song_name").html(resultData.song_name);
         },
         error: function(err) {
             alert("Error: " + err);

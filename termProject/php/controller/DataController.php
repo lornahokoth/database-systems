@@ -196,6 +196,7 @@ function buildAlbumHtml($songResults, $album_info)
         $tablehtml .= '</tr>';
         $count++;
     }
+    $tablehtml .= '</tbody>';
     $tablehtml .= '</table>';
     $tablehtml .= '</div>';
 
@@ -355,6 +356,7 @@ function buildPlaylistHtml($songResults, $playlistData)
         $tablehtml .= '</tr>';
         $count++;
     }
+    $tablehtml .= '</tbody>';
     $tablehtml .= '</table>';
     $tablehtml .= '</div>';
 
@@ -559,6 +561,7 @@ function buildArtistHtml($songResults, $artistData, $totalListens)
         $tablehtml .= '</tr>';
         $count++;
     }
+    $tablehtml .= '</tbody>';
     $tablehtml .= '</table>';
     $tablehtml .= '</div>';
 
@@ -651,7 +654,12 @@ function playSong() {
         return;
     }
 
+    $song_sql = "SELECT * FROM dwekesa1.Song WHERE song_id = " . $song_id;
+    $results = mysqli_query($conn, $song_sql);
+    $songData = $results->fetch_assoc();
+
     $return['code'] = 200;
     $return['message'] = "Added to listen table";
+    $return['song_name'] = $songData['name'];
     return;    
 }
